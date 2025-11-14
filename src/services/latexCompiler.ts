@@ -16,7 +16,7 @@ export interface CompilationError {
 
 export class LaTeXCompiler {
   // Use local proxy server to avoid CORS issues
-  private static readonly PROXY_API = process.env.VITE_LATEX_API_URL || 'http://localhost:3001/api/compile';
+  private static readonly PROXY_API = import.meta.env.VITE_LATEX_API_URL || 'http://localhost:3001/api/compile';
 
   static async compile(
     latexCode: string, 
