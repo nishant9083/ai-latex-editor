@@ -7,9 +7,7 @@ export default function Toolbar() {
     setShowSettings, 
     aiPanelOpen, 
     setAiPanelOpen,
-    setEditorWidth,
-    setAiPanelWidth 
-  } = useEditorStore();
+    setEditorWidth  } = useEditorStore();
   const [showLayoutMenu, setShowLayoutMenu] = useState(false);
   const layoutMenuRef = useRef<HTMLDivElement>(null);
 
