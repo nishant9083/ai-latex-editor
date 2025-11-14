@@ -1,4 +1,5 @@
 import axios from 'axios';
+import { ProjectFile } from '../store/editorStore';
 
 export interface CompilationResult {
   success: boolean;
@@ -17,13 +18,18 @@ export class LaTeXCompiler {
   // Use local proxy server to avoid CORS issues
   private static readonly PROXY_API = 'http://localhost:3001/api/compile';
 
-  static async compile(latexCode: string, abortSignal?: AbortSignal): Promise<CompilationResult> {
+  static async compile(
+    latexCode: string, 
+    projectFiles?: ProjectFile[],
+    abortSignal?: AbortSignal
+  ): Promise<CompilationResult> {
     try {
-      // Send LaTeX code to proxy server
+      // Send LaTeX code and project files to proxy server
       const response = await axios.post(this.PROXY_API, {
-        latexCode: latexCode
+        latexCode: latexCode,
+        projectFiles: projectFiles || []
       }, {
-        timeout: 30000, // 30 seconds timeout
+        timeout: 60000, // 60 seconds timeout
         signal: abortSignal,
       });
 

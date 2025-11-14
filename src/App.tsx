@@ -5,6 +5,8 @@ import Toolbar from './components/Toolbar';
 import Settings from './components/Settings';
 import AIAssistant from './components/AIAssistant';
 import ResizablePanels from './components/ResizablePanels';
+import DiffViewer from './components/DiffViewer';
+import FileManager from './components/FileManager';
 import { useEditorStore } from './store/editorStore';
 import { LaTeXCompiler } from './services/latexCompiler';
 
@@ -14,11 +16,12 @@ function App() {
     setCompilationResult,
     setIsCompiling,
     showSettings,
-    aiPanelOpen,
     editorFullscreen,
     previewFullscreen,
     autoCompile,
     setCompilationError,
+    projectFiles,
+    addCompilationLog,
   } = useEditorStore();
 
   // Auto-compile on code change with debounce
@@ -29,21 +32,23 @@ function App() {
       setIsCompiling(true);
       setCompilationError(null); // Clear previous errors
       try {
-        const result = await LaTeXCompiler.compile(latexCode);
+        const result = await LaTeXCompiler.compile(latexCode, projectFiles);
         setCompilationResult(result);
         setCompilationError(null); // Clear error on success
+        addCompilationLog('success', 'Compilation successful');
       } catch (error) {
         console.error('Compilation failed:', error);
         const errorMessage = error instanceof Error ? error.message : 'Unknown compilation error';
         setCompilationError(errorMessage);
         setCompilationResult(null); // Clear previous result on error
+        addCompilationLog('error', errorMessage);
       } finally {
         setIsCompiling(false);
       }
     }, 1000);
 
     return () => clearTimeout(timer);
-  }, [latexCode, setCompilationResult, setIsCompiling, autoCompile, setCompilationError]);
+  }, [latexCode, projectFiles, setCompilationResult, setIsCompiling, autoCompile, setCompilationError]);
 
   return (
     <div className="flex flex-col h-screen bg-gray-900">
@@ -60,32 +65,25 @@ function App() {
             <Preview />
           </div>
         ) : (
-          /* Normal Mode with Resizable Panels */
+          /* Normal Mode - Always 2 panels (File Manager + Editor/Preview) */
           <div className="flex-1 flex">
-            {aiPanelOpen ? (
-              /* With AI Panel */
-              <>
-                <div className="w-1/3 border-r border-gray-700">
-                  <Editor />
-                </div>
-                <div className="w-1/3 border-r border-gray-700">
-                  <Preview />
-                </div>
-                <div className="w-1/3">
-                  <AIAssistant />
-                </div>
-              </>
-            ) : (
-              /* Without AI Panel - Resizable */
-              <ResizablePanels
-                leftPanel={<Editor />}
-                rightPanel={<Preview />}
-              />
-            )}
+            {/* Independent File Manager - always available */}
+            <FileManager />
+            
+            {/* Editor and Preview - Two resizable panels */}
+            <ResizablePanels
+              leftPanel={<Editor />}
+              rightPanel={<Preview />}
+            />
           </div>
         )}
       </div>
+      
+      {/* Floating AI Assistant - LinkedIn style */}
+      <AIAssistant />
+      
       {showSettings && <Settings />}
+      <DiffViewer />
     </div>
   );
 }

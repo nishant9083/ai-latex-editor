@@ -1,12 +1,35 @@
 {
   "name": "latex-ai-editor",
   "version": "1.0.0",
-  "description": "Live LaTeX editor with AI assistance",
+  "description": "A modern LaTeX editor with real-time preview and AI assistance from multiple providers",
+  "author": "Nishant Verma <nishantverma040@gmail.com>",
+  "license": "MIT",
+  "keywords": [
+    "latex",
+    "editor",
+    "ai",
+    "mathematics",
+    "document",
+    "typesetting",
+    "pdf",
+    "compiler",
+    "monaco-editor",
+    "gemini",
+    "openai",
+    "claude",
+    "ollama"
+  ],
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/nishant9083/ai-latex-editor"
+  },
+  "bugs": {
+    "url": "https://github.com/nishant9083/ai-latex-editor/issues"
+  },
+  "homepage": "https://github.com/nishant9083/ai-latex-editor#readme",
   "type": "module",
   "scripts": {
-    "dev": "vite",
-    "dev:server": "node server/server.js",
-    "dev:all": "concurrently \"npm run dev:server\" \"npm run dev\"",
+    "dev": "vite",      
     "build": "tsc && vite build",
     "preview": "vite preview",
     "lint": "eslint . --ext ts,tsx --report-unused-disable-directives --max-warnings 0"

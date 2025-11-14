@@ -24,6 +24,7 @@ export class AIService {
     const saved = localStorage.getItem('ai-provider-settings');
     if (saved) {
       this.settings = JSON.parse(saved);
+      this.loadProvider();
     }
   }
 
@@ -70,6 +71,21 @@ export class AIService {
           );
         }
         break;
+    }
+  }
+
+  loadProvider(): void {
+    if (this.currentProvider) {
+      return;
+    }
+    if (this.settings.gemini?.apiKey) {
+        this.setProvider('gemini');
+    } else if (this.settings.ollama?.endpoint) {
+        this.setProvider('ollama');
+    } else if (this.settings.openai?.apiKey) {
+        this.setProvider('openai'); 
+    } else if (this.settings.anthropic?.apiKey) {
+        this.setProvider('anthropic');
     }
   }
 

@@ -1,13 +1,73 @@
 <!doctype html>
 <html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <link rel="icon" type="image/svg+xml" href="/vite.svg" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>LaTeX AI Editor</title>
-  </head>
-  <body>
-    <div id="root"></div>
-    <script type="module" src="/src/main.tsx"></script>
-  </body>
+    <head>
+        <meta charset="UTF-8" />
+        
+        <!-- Favicons -->
+        <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+        <link rel="apple-touch-icon" href="/logo.svg" />
+        
+        <!-- Viewport -->
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        
+        <!-- Primary Meta Tags -->
+        <title>LaTeX AI Editor - Intelligent LaTeX Editing with AI Assistance</title>
+        <meta name="title" content="LaTeX AI Editor - Intelligent LaTeX Editing with AI Assistance" />
+        <meta name="description" content="A modern, powerful online LaTeX editor with real-time preview and AI assistance. Support for multiple AI providers including Gemini, OpenAI, Claude, and Ollama. Write, compile, and perfect your LaTeX documents with intelligent suggestions." />
+        <meta name="keywords" content="LaTeX, editor, AI, mathematics, document, typesetting, online editor, PDF, compiler, academic writing, scientific documents, Gemini, OpenAI, Claude, Ollama" />
+        <meta name="author" content="Nishant Verma" />
+        <meta name="robots" content="index, follow" />
+        
+        <!-- Open Graph / Facebook -->
+        <meta property="og:type" content="website" />
+        <meta property="og:url" content="https://latex-ai-editor.vercel.app/" />
+        <meta property="og:title" content="LaTeX AI Editor - Intelligent LaTeX Editing with AI Assistance" />
+        <meta property="og:description" content="A modern, powerful online LaTeX editor with real-time preview and AI assistance. Write, compile, and perfect your LaTeX documents." />
+        <meta property="og:image" content="/logo.svg" />
+        
+        <!-- Twitter -->
+        <meta property="twitter:card" content="summary_large_image" />
+        <meta property="twitter:url" content="https://latex-ai-editor.vercel.app/" />
+        <meta property="twitter:title" content="LaTeX AI Editor - Intelligent LaTeX Editing with AI Assistance" />
+        <meta property="twitter:description" content="A modern, powerful online LaTeX editor with real-time preview and AI assistance." />
+        <meta property="twitter:image" content="/logo.svg" />
+        
+        <!-- Security headers -->
+        <meta http-equiv="X-Content-Type-Options" content="nosniff" />
+        <meta http-equiv="X-Frame-Options" content="DENY" />
+        <meta http-equiv="X-XSS-Protection" content="1; mode=block" />
+        <meta http-equiv="Permissions-Policy" content="camera=(), microphone=(), geolocation=()" />
+        
+        <!-- Theme Color -->
+        <meta name="theme-color" content="#1e293b" />
+        <meta name="msapplication-TileColor" content="#1e293b" />
+        
+        <!-- Performance hints -->
+        <link rel="preconnect" href="https://fonts.googleapis.com" />
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+        <link rel="dns-prefetch" href="https://generativelanguage.googleapis.com" />
+        <link rel="dns-prefetch" href="https://api.openai.com" />
+        <link rel="dns-prefetch" href="https://api.anthropic.com" />
+        
+        <!-- Manifest for PWA (optional) -->
+        <link rel="manifest" href="/manifest.json" />
+        
+        <title>LaTeX AI Editor</title>
+    </head>
+    <body>
+        <noscript>
+            <div style="text-align: center; padding: 50px; font-family: Arial, sans-serif; background-color: #1e293b; color: #e2e8f0; min-height: 100vh; display: flex; flex-direction: column; justify-content: center; align-items: center;">
+                <img src="/logo.svg" alt="LaTeX AI Editor" style="width: 120px; height: 120px; margin-bottom: 20px;" />
+                <h1 style="color: #3b82f6; margin-bottom: 10px;">JavaScript Required</h1>
+                <p style="max-width: 500px; line-height: 1.6;">
+                    LaTeX AI Editor requires JavaScript to function properly. Please enable JavaScript in your browser settings to use this application.
+                </p>
+                <p style="margin-top: 20px; font-size: 14px; color: #94a3b8;">
+                    Need help? Check your browser's documentation on enabling JavaScript.
+                </p>
+            </div>
+        </noscript>
+        <div id="root"></div>
+        <script type="module" src="/src/main.tsx"></script>
+    </body>
 </html>

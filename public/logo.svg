@@ -1,0 +1,77 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 200" width="200" height="200">
+  <!-- Background Circle -->
+  <circle cx="100" cy="100" r="95" fill="#1e293b" stroke="#3b82f6" stroke-width="3"/>
+  
+  <!-- Gradient Definition -->
+  <defs>
+    <linearGradient id="logoGradient" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#3b82f6;stop-opacity:1" />
+      <stop offset="100%" style="stop-color:#8b5cf6;stop-opacity:1" />
+    </linearGradient>
+    
+    <!-- Glow effect -->
+    <filter id="glow">
+      <feGaussianBlur stdDeviation="2" result="coloredBlur"/>
+      <feMerge>
+        <feMergeNode in="coloredBlur"/>
+        <feMergeNode in="SourceGraphic"/>
+      </feMerge>
+    </filter>
+  </defs>
+  
+  <!-- LaTeX Symbol - Stylized "L" -->
+  <path d="M 50 60 L 50 140 L 80 140" 
+        stroke="url(#logoGradient)" 
+        stroke-width="8" 
+        stroke-linecap="round" 
+        stroke-linejoin="round" 
+        fill="none"
+        filter="url(#glow)"/>
+  
+  <!-- LaTeX Symbol - Stylized "A" (triangle) -->
+  <path d="M 85 140 L 100 60 L 115 140" 
+        stroke="url(#logoGradient)" 
+        stroke-width="8" 
+        stroke-linecap="round" 
+        stroke-linejoin="round" 
+        fill="none"
+        filter="url(#glow)"/>
+  
+  <!-- LaTeX Symbol - Stylized "T" -->
+  <path d="M 120 70 L 150 70 M 135 70 L 135 140" 
+        stroke="url(#logoGradient)" 
+        stroke-width="8" 
+        stroke-linecap="round" 
+        stroke-linejoin="round" 
+        fill="none"
+        filter="url(#glow)"/>
+  
+  <!-- AI Sparkle/Star -->
+  <g transform="translate(150, 50)">
+    <!-- Main star -->
+    <path d="M 0 -8 L 2 -2 L 8 0 L 2 2 L 0 8 L -2 2 L -8 0 L -2 -2 Z" 
+          fill="#60a5fa" 
+          filter="url(#glow)"/>
+    <!-- Small accent stars -->
+    <circle cx="15" cy="5" r="2" fill="#93c5fd"/>
+    <circle cx="10" cy="15" r="1.5" fill="#93c5fd"/>
+  </g>
+  
+  <!-- Document Lines (subtle background) -->
+  <g opacity="0.15">
+    <line x1="55" y1="80" x2="75" y2="80" stroke="#94a3b8" stroke-width="2"/>
+    <line x1="55" y1="95" x2="75" y2="95" stroke="#94a3b8" stroke-width="2"/>
+    <line x1="55" y1="110" x2="75" y2="110" stroke="#94a3b8" stroke-width="2"/>
+    <line x1="55" y1="125" x2="75" y2="125" stroke="#94a3b8" stroke-width="2"/>
+  </g>
+  
+  <!-- Bottom text -->
+  <text x="100" y="175" 
+        font-family="Arial, sans-serif" 
+        font-size="16" 
+        font-weight="bold" 
+        fill="url(#logoGradient)" 
+        text-anchor="middle">
+    LaTeX AI
+  </text>
+</svg>

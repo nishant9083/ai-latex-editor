@@ -3,6 +3,12 @@ import { persist } from 'zustand/middleware';
 import { AIProviderType } from '../types/ai';
 import { CompilationResult } from '../services/latexCompiler';
 
+export interface ProjectFile {
+  name: string;
+  content: string;
+  type: 'tex' | 'bib' | 'image' | 'other';
+}
+
 // Default LaTeX template
 const DEFAULT_LATEX_CODE = `\\documentclass{article}
 \\usepackage[utf8]{inputenc}
@@ -44,6 +50,20 @@ interface EditorState {
   latexCode: string;
   setLatexCode: (code: string) => void;
 
+  // Multi-file project support
+  projectFiles: ProjectFile[];
+  addProjectFile: (file: ProjectFile) => void;
+  updateProjectFile: (name: string, content: string) => void;
+  removeProjectFile: (name: string) => void;
+  currentFile: string; // Currently active file name
+  setCurrentFile: (name: string) => void;
+
+  // Code suggestions
+  suggestedCode: string | null;
+  setSuggestedCode: (code: string | null) => void;
+  suggestionPrompt: string | null;
+  setSuggestionPrompt: (prompt: string | null) => void;
+
   // Compilation
   compilationResult: CompilationResult | null;
   setCompilationResult: (result: CompilationResult | null) => void;
@@ -53,6 +73,9 @@ interface EditorState {
   setAutoCompile: (auto: boolean) => void;
   compilationError: string | null;
   setCompilationError: (error: string | null) => void;
+  compilationLogs: Array<{ timestamp: number; type: 'success' | 'error'; message: string }>;
+  addCompilationLog: (type: 'success' | 'error', message: string) => void;
+  clearCompilationLogs: () => void;
 
   // AI Provider
   selectedProvider: AIProviderType | null;
@@ -75,6 +98,8 @@ interface EditorState {
   // Resizable panel
   editorWidth: number; // percentage (0-100)
   setEditorWidth: (width: number) => void;
+  aiPanelWidth: number; // percentage (0-100)
+  setAiPanelWidth: (width: number) => void;
 
   // Editor preferences
   fontSize: number;
@@ -97,15 +122,42 @@ export const useEditorStore = create<EditorState>()(
       latexCode: DEFAULT_LATEX_CODE,
       setLatexCode: (code) => set({ latexCode: code }),
 
+      // Multi-file project support
+      projectFiles: [],
+      addProjectFile: (file) => set((state) => ({ 
+        projectFiles: [...state.projectFiles, file] 
+      })),
+      updateProjectFile: (name, content) => set((state) => ({
+        projectFiles: state.projectFiles.map(f => 
+          f.name === name ? { ...f, content } : f
+        )
+      })),
+      removeProjectFile: (name) => set((state) => ({
+        projectFiles: state.projectFiles.filter(f => f.name !== name)
+      })),
+      currentFile: 'main.tex',
+      setCurrentFile: (name) => set({ currentFile: name }),
+
+      // Code suggestions
+      suggestedCode: null,
+      setSuggestedCode: (code) => set({ suggestedCode: code }),
+      suggestionPrompt: null,
+      setSuggestionPrompt: (prompt) => set({ suggestionPrompt: prompt }),
+
       // Compilation
       compilationResult: null,
-  setCompilationResult: (result) => set({ compilationResult: result }),
-  isCompiling: false,
-  setIsCompiling: (compiling) => set({ isCompiling: compiling }),
+      setCompilationResult: (result) => set({ compilationResult: result }),
+      isCompiling: false,
+      setIsCompiling: (compiling) => set({ isCompiling: compiling }),
   autoCompile: true,
   setAutoCompile: (auto) => set({ autoCompile: auto }),
   compilationError: null,
   setCompilationError: (error) => set({ compilationError: error }),
+  compilationLogs: [],
+  addCompilationLog: (type, message) => set((state) => ({
+    compilationLogs: [{ timestamp: Date.now(), type, message }, ...state.compilationLogs].slice(0, 50) // Keep last 50 logs
+  })),
+  clearCompilationLogs: () => set({ compilationLogs: [] }),
 
   // AI Provider
   selectedProvider: null,
@@ -128,6 +180,8 @@ export const useEditorStore = create<EditorState>()(
   // Resizable panel
   editorWidth: 50, // Default 50%
   setEditorWidth: (width) => set({ editorWidth: width }),
+  aiPanelWidth: 30, // Default 30%
+  setAiPanelWidth: (width) => set({ aiPanelWidth: width }),
 
   // Editor preferences
   fontSize: 14,
@@ -153,10 +207,13 @@ export const useEditorStore = create<EditorState>()(
         autoCompile: state.autoCompile,
         selectedProvider: state.selectedProvider,
         editorWidth: state.editorWidth,
+        aiPanelWidth: state.aiPanelWidth,
         aiPanelOpen: state.aiPanelOpen,
         fontSize: state.fontSize,
         showMinimap: state.showMinimap,
         showLineNumbers: state.showLineNumbers,
+        projectFiles: state.projectFiles,
+        currentFile: state.currentFile,
       }),
     }
   )
